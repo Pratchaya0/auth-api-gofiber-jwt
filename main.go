@@ -1,8 +1,8 @@
 package main
 
 import (
+	"github.com/Pratchaya0/auth-api-gofiber-jwt/entities"
 	"github.com/Pratchaya0/auth-api-gofiber-jwt/middlewares"
-	"github.com/Pratchaya0/auth-api-gofiber-jwt/models"
 	"github.com/Pratchaya0/auth-api-gofiber-jwt/routes"
 	"github.com/gofiber/fiber/v2"
 
@@ -23,7 +23,7 @@ import (
 func main() {
 	app := fiber.New()
 
-	models.SetupDatabase()
+	entities.SetupDatabase()
 
 	app.Get("/swagger/*", swagger.HandlerDefault) // default
 
@@ -43,7 +43,9 @@ func main() {
 
 	middlewares.CORSMiddleware(app)
 
-	routes.RouteSetup(app)
+	routes.AuthRouteSetup(app)
+
+	routes.UserRouteSetup(app)
 
 	app.Listen(":8080")
 }
