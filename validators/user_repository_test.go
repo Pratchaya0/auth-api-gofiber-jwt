@@ -17,12 +17,12 @@ type mockUserRepo struct {
 
 // GetUserByEmail implements repositories.UserRepository.
 func (m *mockUserRepo) GetUserByEmail(email string) (entities.User, error) {
-	panic("unimplemented")
+	return m.getUserByEmailFunc(email)
 }
 
 // GetUserById implements repositories.UserRepository.
 func (m *mockUserRepo) GetUserById(issuer string) (entities.User, error) {
-	panic("unimplemented")
+	return m.getUserByIdFunc(issuer)
 }
 
 // List implements repositories.UserRepository.

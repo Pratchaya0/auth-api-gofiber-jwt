@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/Pratchaya0/auth-api-gofiber-jwt/DTOs/responses"
 	"github.com/Pratchaya0/auth-api-gofiber-jwt/entities"
 	"github.com/Pratchaya0/auth-api-gofiber-jwt/usecases"
 	"github.com/gofiber/fiber/v2"
@@ -20,6 +21,13 @@ func NewAuthHandler(userUseCase *usecases.UserUseCase) *AuthHandler {
 	return &AuthHandler{userUseCase: userUseCase}
 }
 
+// @Summary แสดงข้อมูลของผู้ใช้
+// @Tag Auth
+// @Security bearerToken
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /auth/current-user [get]
 func (h *AuthHandler) CurrentUser(c *fiber.Ctx) error {
 	cookie := c.Cookies("jwt")
 
@@ -40,9 +48,22 @@ func (h *AuthHandler) CurrentUser(c *fiber.Ctx) error {
 		return c.Status(fiber.StatusNotFound).JSON(fiber.Map{"message": "User not found."})
 	}
 
-	return c.Status(fiber.StatusOK).JSON(user)
+	webResponse := responses.Response{
+		Code:   fiber.StatusOK,
+		Status: "OK",
+		Data:   user,
+	}
+
+	return c.Status(fiber.StatusOK).JSON(webResponse)
 }
 
+// @Summary สมัครเข้าใช้งานระบบ
+// @Tag Auth
+// @Param register body requests.RegisterRequest true "RegisterRequest"
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /auth/register [post]
 func (h *AuthHandler) Register(c *fiber.Ctx) error {
 	var data map[string]string
 
@@ -63,9 +84,22 @@ func (h *AuthHandler) Register(c *fiber.Ctx) error {
 		return err
 	}
 
-	return c.Status(fiber.StatusOK).JSON(user)
+	webResponse := responses.Response{
+		Code:   fiber.StatusOK,
+		Status: "OK",
+		Data:   user,
+	}
+
+	return c.Status(fiber.StatusOK).JSON(webResponse)
 }
 
+// @Summary ลงชื่อเข้าใช้งานระบบ
+// @Tag Auth
+// @Param loginRequest body requests.LoginRequest true "LoginRequest"
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /auth/login [post]
 func (h *AuthHandler) Login(c *fiber.Ctx) error {
 	var data map[string]string
 
@@ -113,11 +147,24 @@ func (h *AuthHandler) Login(c *fiber.Ctx) error {
 
 	c.Cookie(&cookie)
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"message": "login success",
-	})
+	webResponse := responses.Response{
+		Code:   fiber.StatusOK,
+		Status: "OK",
+		Data: fiber.Map{
+			"message": "login success",
+			"token":   "Bearer " + token,
+		},
+	}
+
+	return c.Status(fiber.StatusOK).JSON(webResponse)
 }
 
+// @Summary ออกจากการใช้งานระบบ
+// @Tag Auth
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} responses.Response{} "ok"
+// @Router /auth/logout [post]
 func (h *AuthHandler) Logout(c *fiber.Ctx) error {
 	cookie := fiber.Cookie{
 		Name:     "jwt",
@@ -128,7 +175,13 @@ func (h *AuthHandler) Logout(c *fiber.Ctx) error {
 
 	c.Cookie(&cookie)
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"message": "logout success",
-	})
+	webResponse := responses.Response{
+		Code:   fiber.StatusOK,
+		Status: "OK",
+		Data: fiber.Map{
+			"message": "logout success",
+		},
+	}
+
+	return c.Status(fiber.StatusOK).JSON(webResponse)
 }

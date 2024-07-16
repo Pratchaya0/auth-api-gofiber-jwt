@@ -1,15 +1,122 @@
 basePath: /
+definitions:
+  requests.LoginRequest:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  requests.RegisterRequest:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+    type: object
+  responses.Response:
+    properties:
+      code:
+        type: integer
+      data: {}
+      status:
+        type: string
+    type: object
 host: localhost:8080
 info:
   contact:
-    email: fiber@swagger.io
-    name: API Support
+    email: pratchayaworks@gmail.com
+    name: Pratchaya Saenphoi
   description: This is a sample swagger for Fiber
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  termsOfService: http://swagger.io/terms/
   title: Fiber Example API
   version: "1.0"
-paths: {}
+paths:
+  /auth/current-user:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: แสดงข้อมูลของผู้ใช้
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: LoginRequest
+        in: body
+        name: loginRequest
+        required: true
+        schema:
+          $ref: '#/definitions/requests.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      summary: ลงชื่อเข้าใช้งานระบบ
+  /auth/logout:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      summary: ออกจากการใช้งานระบบ
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: RegisterRequest
+        in: body
+        name: register
+        required: true
+        schema:
+          $ref: '#/definitions/requests.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      summary: สมัครเข้าใช้งานระบบ
+  /users/list:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/responses.Response'
+      security:
+      - bearerToken: []
+      summary: แสดงข้อมูลผู้ใช้งานทั้งหมดในระบบ
+securityDefinitions:
+  bearerToken:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

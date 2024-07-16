@@ -17,16 +17,6 @@ func AuthRouteSetup(app *fiber.App) {
 
 	authRoute := app.Group("/auth")
 	{
-		// Handler functions
-		// getBooks godoc
-		// @Summary Get CurrentUser
-		// @Description Get details of login user
-		// @Tags books
-		// @Accept  json
-		// @Produce  json
-		// @Security ApiKeyAuth
-		// @Success 200
-		// @Router /book [get]
 		authRoute.Get("/current-user", authHandler.CurrentUser)
 		authRoute.Post("/register", authHandler.Register)
 		authRoute.Post("/login", authHandler.Login)
