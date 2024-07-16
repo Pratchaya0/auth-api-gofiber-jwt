@@ -5,9 +5,9 @@ import (
 	"github.com/Pratchaya0/auth-api-gofiber-jwt/middlewares"
 	"github.com/Pratchaya0/auth-api-gofiber-jwt/routes"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/swagger"
 
 	_ "github.com/Pratchaya0/auth-api-gofiber-jwt/docs"
-	"github.com/gofiber/swagger"
 )
 
 // @title Fiber Example API
@@ -25,6 +25,12 @@ func main() {
 
 	entities.SetupDatabase()
 
+	middlewares.CORSMiddleware(app)
+
+	routes.AuthRouteSetup(app)
+
+	routes.UserRouteSetup(app)
+
 	app.Get("/swagger/*", swagger.HandlerDefault) // default
 
 	app.Get("/swagger/*", swagger.New(swagger.Config{ // custom
@@ -40,12 +46,6 @@ func main() {
 		// Ability to change OAuth2 redirect uri location
 		OAuth2RedirectUrl: "http://localhost:8080/swagger/oauth2-redirect.html",
 	}))
-
-	middlewares.CORSMiddleware(app)
-
-	routes.AuthRouteSetup(app)
-
-	routes.UserRouteSetup(app)
 
 	app.Listen(":8080")
 }
