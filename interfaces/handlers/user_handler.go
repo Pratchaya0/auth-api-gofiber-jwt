@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"github.com/Pratchaya0/auth-api-gofiber-jwt/DTOs/responses"
+	"github.com/Pratchaya0/auth-api-gofiber-jwt/dtos/responses"
 	"github.com/Pratchaya0/auth-api-gofiber-jwt/entities"
 	"github.com/Pratchaya0/auth-api-gofiber-jwt/usecases"
 	"github.com/gofiber/fiber/v2"

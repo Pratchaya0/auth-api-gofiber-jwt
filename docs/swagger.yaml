@@ -1,21 +1,5 @@
 basePath: /
 definitions:
-  requests.LoginRequest:
-    properties:
-      email:
-        type: string
-      password:
-        type: string
-    type: object
-  requests.RegisterRequest:
-    properties:
-      email:
-        type: string
-      name:
-        type: string
-      password:
-        type: string
-    type: object
   responses.Response:
     properties:
       code:
@@ -55,12 +39,12 @@ paths:
       consumes:
       - application/json
       parameters:
-      - description: LoginRequest
-        in: body
-        name: loginRequest
-        required: true
-        schema:
-          $ref: '#/definitions/requests.LoginRequest'
+      - in: query
+        name: email
+        type: string
+      - in: query
+        name: password
+        type: string
       produces:
       - application/json
       responses:
@@ -86,12 +70,15 @@ paths:
       consumes:
       - application/json
       parameters:
-      - description: RegisterRequest
-        in: body
-        name: register
-        required: true
-        schema:
-          $ref: '#/definitions/requests.RegisterRequest'
+      - in: query
+        name: email
+        type: string
+      - in: query
+        name: name
+        type: string
+      - in: query
+        name: password
+        type: string
       produces:
       - application/json
       responses:
@@ -101,7 +88,7 @@ paths:
             $ref: '#/definitions/responses.Response'
       summary: สมัครเข้าใช้งานระบบ
   /users/list:
-    post:
+    get:
       consumes:
       - application/json
       produces:

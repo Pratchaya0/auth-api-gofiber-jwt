@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/Pratchaya0/auth-api-gofiber-jwt/DTOs/responses"
+	"github.com/Pratchaya0/auth-api-gofiber-jwt/dtos/responses"
 	"github.com/Pratchaya0/auth-api-gofiber-jwt/entities"
 	"github.com/Pratchaya0/auth-api-gofiber-jwt/usecases"
 	"github.com/gofiber/fiber/v2"
@@ -59,7 +59,7 @@ func (h *AuthHandler) CurrentUser(c *fiber.Ctx) error {
 
 // @Summary สมัครเข้าใช้งานระบบ
 // @Tag Auth
-// @Param register body requests.RegisterRequest true "RegisterRequest"
+// @Param register query requests.RegisterRequest true "RegisterRequest"
 // @Accept  json
 // @Produce  json
 // @Success 200 {object} responses.Response{} "ok"
@@ -95,7 +95,7 @@ func (h *AuthHandler) Register(c *fiber.Ctx) error {
 
 // @Summary ลงชื่อเข้าใช้งานระบบ
 // @Tag Auth
-// @Param loginRequest body requests.LoginRequest true "LoginRequest"
+// @Param loginRequest query requests.LoginRequest true "LoginRequest"
 // @Accept  json
 // @Produce  json
 // @Success 200 {object} responses.Response{} "ok"

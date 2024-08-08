@@ -57,13 +57,14 @@ const docTemplate = `{
                 "summary": "ลงชื่อเข้าใช้งานระบบ",
                 "parameters": [
                     {
-                        "description": "LoginRequest",
-                        "name": "loginRequest",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/requests.LoginRequest"
-                        }
+                        "type": "string",
+                        "name": "email",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "password",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -106,13 +107,19 @@ const docTemplate = `{
                 "summary": "สมัครเข้าใช้งานระบบ",
                 "parameters": [
                     {
-                        "description": "RegisterRequest",
-                        "name": "register",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/requests.RegisterRequest"
-                        }
+                        "type": "string",
+                        "name": "email",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "password",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -126,7 +133,7 @@ const docTemplate = `{
             }
         },
         "/users/list": {
-            "post": {
+            "get": {
                 "security": [
                     {
                         "bearerToken": []
@@ -151,31 +158,6 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "requests.LoginRequest": {
-            "type": "object",
-            "properties": {
-                "email": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                }
-            }
-        },
-        "requests.RegisterRequest": {
-            "type": "object",
-            "properties": {
-                "email": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                }
-            }
-        },
         "responses.Response": {
             "type": "object",
             "properties": {
